@@ -9,14 +9,11 @@ namespace Parallel_Labs.lab1.SkipList
         private AtomicReference<Node<T>> rightNode;
         private AtomicReference<Node<T>> lowerNode;
         private T value;
-        private bool toBeDeleted;
-
         public Node(T value, int height)
         {
             this.value = value;
             rightNode = new AtomicReference<Node<T>>(null);
             lowerNode = new AtomicReference<Node<T>>(null);
-            toBeDeleted = false;
         }
 
         public T GetValue()
@@ -43,14 +40,10 @@ namespace Parallel_Labs.lab1.SkipList
         {
             this.lowerNode.GetAndSet(lowerNode);
         }
-        
-        public void SetToBeDeleted(bool toBeDeleted) {
-            this.toBeDeleted = toBeDeleted;
-        }
-        
+
         public bool CompareAndSetRightNode(Node<T> expected, Node<T> next)
         {
-            return !toBeDeleted && rightNode.CompareAndSet(expected, next);
+            return rightNode.CompareAndSet(expected, next);
         }
         
         public bool SetLowerNode(Node<T> expected, Node<T> next) {
