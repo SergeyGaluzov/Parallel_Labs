@@ -2,7 +2,7 @@
 using Akka;
 using Akka.Util;
 
-namespace lab1.SkipList
+namespace Parallel_Labs.lab1.SkipList
 {
     public class Node<T>
     { 
