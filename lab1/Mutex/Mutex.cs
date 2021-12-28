@@ -40,7 +40,7 @@ namespace Parallel_Labs.lab1.Mutex
             _waitingThreads.Add(Thread.CurrentThread);
             Unlock();
 
-            while (_isLocked == 0)
+            while (_waitingThreads.Contains(Thread.CurrentThread))
             {
                 Thread.Yield();
             }
@@ -55,7 +55,8 @@ namespace Parallel_Labs.lab1.Mutex
             _currentThread = Thread.CurrentThread;
             if (_waitingThreads.Count > 0)
             {
-                _waitingThreads.RemoveAt(_waitingThreads.Count - 1);
+                var randomIndex = new Random().Next(0, _waitingThreads.Count);
+                _waitingThreads.RemoveAt(randomIndex);
                 Interlocked.Exchange(ref _isLocked, 0);
             } 
             else
